@@ -11,8 +11,11 @@ if [[ -f student-submission/ListExamples.java ]]; then
 
 if [[ $? -eq 0 ]]; then
     java -cp .:lib/hamcrest-core-1.3.jar:lib/junit-4.13.2.jar org.junit.runner.JUnitCore TestListExamples > testResults.txt
-    echo "# of Test Passed: $(grep -c 'OK' testResults.txt)"
-    echo "# of Test Failed: $(grep -c 'FAILURES!!!' testResults.txt)"
+    passedTest=$(grep -c 'OK' testResults.txt)
+    failedTest=$(grep -c 'FAILURES!!!' testResults.txt)
+    totalTest=passedTest+failedTest
+    score=$((100*(passedTest/totalTest)))
+    echo "Final Grade: $score%"
  else 
     echo "Tests failed to compile"
     exit
